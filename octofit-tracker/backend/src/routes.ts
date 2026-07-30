@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import mongoose from 'mongoose';
 import {
   Activity,
   LeaderboardEntry,
@@ -14,8 +15,12 @@ import {
 
 const router = Router();
 
+const isDbConnected = () => mongoose.connection.readyState === 1;
+
 router.get('/api/users', async (_req, res) => {
   try {
+    if (!isDbConnected()) return res.json(sampleUsers);
+
     const users = await User.find({});
     if (users.length === 0) {
       const created = await User.insertMany(sampleUsers);
@@ -23,12 +28,14 @@ router.get('/api/users', async (_req, res) => {
     }
     return res.json(users);
   } catch (error) {
-    return res.status(500).json({ error: 'Unable to load users' });
+    return res.json(sampleUsers);
   }
 });
 
 router.get('/api/teams', async (_req, res) => {
   try {
+    if (!isDbConnected()) return res.json(sampleTeams);
+
     const teams = await Team.find({});
     if (teams.length === 0) {
       const created = await Team.insertMany(sampleTeams);
@@ -36,12 +43,14 @@ router.get('/api/teams', async (_req, res) => {
     }
     return res.json(teams);
   } catch (error) {
-    return res.status(500).json({ error: 'Unable to load teams' });
+    return res.json(sampleTeams);
   }
 });
 
 router.get('/api/activities', async (_req, res) => {
   try {
+    if (!isDbConnected()) return res.json(sampleActivities);
+
     const activities = await Activity.find({});
     if (activities.length === 0) {
       const created = await Activity.insertMany(sampleActivities);
@@ -49,12 +58,14 @@ router.get('/api/activities', async (_req, res) => {
     }
     return res.json(activities);
   } catch (error) {
-    return res.status(500).json({ error: 'Unable to load activities' });
+    return res.json(sampleActivities);
   }
 });
 
 router.get('/api/leaderboard', async (_req, res) => {
   try {
+    if (!isDbConnected()) return res.json(sampleLeaderboardEntries);
+
     const entries = await LeaderboardEntry.find({});
     if (entries.length === 0) {
       const created = await LeaderboardEntry.insertMany(sampleLeaderboardEntries);
@@ -62,12 +73,14 @@ router.get('/api/leaderboard', async (_req, res) => {
     }
     return res.json(entries);
   } catch (error) {
-    return res.status(500).json({ error: 'Unable to load leaderboard' });
+    return res.json(sampleLeaderboardEntries);
   }
 });
 
 router.get('/api/workouts', async (_req, res) => {
   try {
+    if (!isDbConnected()) return res.json(sampleWorkouts);
+
     const workouts = await Workout.find({});
     if (workouts.length === 0) {
       const created = await Workout.insertMany(sampleWorkouts);
@@ -75,7 +88,7 @@ router.get('/api/workouts', async (_req, res) => {
     }
     return res.json(workouts);
   } catch (error) {
-    return res.status(500).json({ error: 'Unable to load workouts' });
+    return res.json(sampleWorkouts);
   }
 });
 
