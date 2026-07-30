@@ -1,0 +1,18 @@
+{
+  "dependencies": {
+    "express": "^5.2.1",
+    "mongoose": "^9.9.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.1.2",
+    "nodemon": "^3.1.14",
+    "ts-node": "^10.9.2",
+    "typescript": "^7.0.2"
+  },
+  "scripts": {
+    "dev": "nodemon --exec ts-node src/server.ts",
+    "start": "node dist/server.js",
+    "build": "tsc"
+  }
+}
