@@ -8,7 +8,7 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const models_1 = require("./models");
 const router = (0, express_1.Router)();
 const isDbConnected = () => mongoose_1.default.connection.readyState === 1;
-router.get('/api/users', async (_req, res) => {
+router.get(['/api/users', '/api/users/'], async (_req, res) => {
     try {
         if (!isDbConnected())
             return res.json(models_1.sampleUsers);
@@ -23,7 +23,7 @@ router.get('/api/users', async (_req, res) => {
         return res.json(models_1.sampleUsers);
     }
 });
-router.get('/api/teams', async (_req, res) => {
+router.get(['/api/teams', '/api/teams/'], async (_req, res) => {
     try {
         if (!isDbConnected())
             return res.json(models_1.sampleTeams);
@@ -38,7 +38,7 @@ router.get('/api/teams', async (_req, res) => {
         return res.json(models_1.sampleTeams);
     }
 });
-router.get('/api/activities', async (_req, res) => {
+router.get(['/api/activities', '/api/activities/'], async (_req, res) => {
     try {
         if (!isDbConnected())
             return res.json(models_1.sampleActivities);
@@ -53,7 +53,7 @@ router.get('/api/activities', async (_req, res) => {
         return res.json(models_1.sampleActivities);
     }
 });
-router.get('/api/leaderboard', async (_req, res) => {
+router.get(['/api/leaderboard', '/api/leaderboard/'], async (_req, res) => {
     try {
         if (!isDbConnected())
             return res.json(models_1.sampleLeaderboardEntries);
@@ -68,7 +68,7 @@ router.get('/api/leaderboard', async (_req, res) => {
         return res.json(models_1.sampleLeaderboardEntries);
     }
 });
-router.get('/api/workouts', async (_req, res) => {
+router.get(['/api/workouts', '/api/workouts/'], async (_req, res) => {
     try {
         if (!isDbConnected())
             return res.json(models_1.sampleWorkouts);
