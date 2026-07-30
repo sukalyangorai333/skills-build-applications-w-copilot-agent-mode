@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { fetchCollection } from '../api';
+import { getApiUrlForResource, normalizeCollection } from '../api';
 
 function Activities() {
   const [activities, setActivities] = useState([]);
@@ -11,9 +11,15 @@ function Activities() {
 
     const loadActivities = async () => {
       try {
-        const data = await fetchCollection('activities');
+        const response = await fetch(getApiUrlForResource('activities'));
+
+        if (!response.ok) {
+          throw new Error('Unable to load activities');
+        }
+
+        const payload = await response.json();
         if (isMounted) {
-          setActivities(data);
+          setActivities(normalizeCollection(payload));
         }
       } catch (err) {
         if (isMounted) {

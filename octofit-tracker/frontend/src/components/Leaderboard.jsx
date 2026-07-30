@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { fetchCollection } from '../api';
+import { getApiUrlForResource, normalizeCollection } from '../api';
 
 function Leaderboard() {
   const [entries, setEntries] = useState([]);
@@ -11,9 +11,15 @@ function Leaderboard() {
 
     const loadLeaderboard = async () => {
       try {
-        const data = await fetchCollection('leaderboard');
+        const response = await fetch(getApiUrlForResource('leaderboard'));
+
+        if (!response.ok) {
+          throw new Error('Unable to load leaderboard');
+        }
+
+        const payload = await response.json();
         if (isMounted) {
-          setEntries(data);
+          setEntries(normalizeCollection(payload));
         }
       } catch (err) {
         if (isMounted) {

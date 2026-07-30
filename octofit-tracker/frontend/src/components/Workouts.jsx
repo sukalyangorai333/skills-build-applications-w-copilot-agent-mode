@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { fetchCollection } from '../api';
+import { getApiUrlForResource, normalizeCollection } from '../api';
 
 function Workouts() {
   const [workouts, setWorkouts] = useState([]);
@@ -11,9 +11,15 @@ function Workouts() {
 
     const loadWorkouts = async () => {
       try {
-        const data = await fetchCollection('workouts');
+        const response = await fetch(getApiUrlForResource('workouts'));
+
+        if (!response.ok) {
+          throw new Error('Unable to load workouts');
+        }
+
+        const payload = await response.json();
         if (isMounted) {
-          setWorkouts(data);
+          setWorkouts(normalizeCollection(payload));
         }
       } catch (err) {
         if (isMounted) {

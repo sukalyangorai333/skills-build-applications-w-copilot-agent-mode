@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { fetchCollection } from '../api';
+import { getApiUrlForResource, normalizeCollection } from '../api';
 
 function Teams() {
   const [teams, setTeams] = useState([]);
@@ -11,9 +11,15 @@ function Teams() {
 
     const loadTeams = async () => {
       try {
-        const data = await fetchCollection('teams');
+        const response = await fetch(getApiUrlForResource('teams'));
+
+        if (!response.ok) {
+          throw new Error('Unable to load teams');
+        }
+
+        const payload = await response.json();
         if (isMounted) {
-          setTeams(data);
+          setTeams(normalizeCollection(payload));
         }
       } catch (err) {
         if (isMounted) {

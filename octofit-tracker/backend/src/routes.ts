@@ -17,7 +17,7 @@ const router = Router();
 
 const isDbConnected = () => mongoose.connection.readyState === 1;
 
-router.get('/api/users', async (_req, res) => {
+router.get(['/api/users', '/api/users/'], async (_req, res) => {
   try {
     if (!isDbConnected()) return res.json(sampleUsers);
 
@@ -32,7 +32,7 @@ router.get('/api/users', async (_req, res) => {
   }
 });
 
-router.get('/api/teams', async (_req, res) => {
+router.get(['/api/teams', '/api/teams/'], async (_req, res) => {
   try {
     if (!isDbConnected()) return res.json(sampleTeams);
 
@@ -47,7 +47,7 @@ router.get('/api/teams', async (_req, res) => {
   }
 });
 
-router.get('/api/activities', async (_req, res) => {
+router.get(['/api/activities', '/api/activities/'], async (_req, res) => {
   try {
     if (!isDbConnected()) return res.json(sampleActivities);
 
@@ -62,7 +62,7 @@ router.get('/api/activities', async (_req, res) => {
   }
 });
 
-router.get('/api/leaderboard', async (_req, res) => {
+router.get(['/api/leaderboard', '/api/leaderboard/'], async (_req, res) => {
   try {
     if (!isDbConnected()) return res.json(sampleLeaderboardEntries);
 
@@ -77,7 +77,7 @@ router.get('/api/leaderboard', async (_req, res) => {
   }
 });
 
-router.get('/api/workouts', async (_req, res) => {
+router.get(['/api/workouts', '/api/workouts/'], async (_req, res) => {
   try {
     if (!isDbConnected()) return res.json(sampleWorkouts);
 

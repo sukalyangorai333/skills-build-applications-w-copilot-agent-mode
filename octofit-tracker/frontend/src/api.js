@@ -10,10 +10,12 @@ export const getApiBaseUrl = () => {
   return 'http://localhost:8000/api/';
 };
 
-export const buildApiUrl = (resource) => {
+export const getApiUrlForResource = (resource) => {
   const normalizedResource = resource.replace(/^\/+|\/+$/g, '');
   return `${getApiBaseUrl()}${normalizedResource}/`;
 };
+
+export const buildApiUrl = (resource) => getApiUrlForResource(resource);
 
 export const normalizeCollection = (payload) => {
   if (Array.isArray(payload)) {

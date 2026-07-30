@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { fetchCollection } from '../api';
+import { getApiUrlForResource, normalizeCollection } from '../api';
 
 function Users() {
   const [users, setUsers] = useState([]);
@@ -11,9 +11,15 @@ function Users() {
 
     const loadUsers = async () => {
       try {
-        const data = await fetchCollection('users');
+        const response = await fetch(getApiUrlForResource('users'));
+
+        if (!response.ok) {
+          throw new Error('Unable to load users');
+        }
+
+        const payload = await response.json();
         if (isMounted) {
-          setUsers(data);
+          setUsers(normalizeCollection(payload));
         }
       } catch (err) {
         if (isMounted) {
