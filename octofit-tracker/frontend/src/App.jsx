@@ -1,6 +1,21 @@
-import './App.css'
+import { NavLink, Route, Routes } from 'react-router-dom';
+import './App.css';
+import Activities from './components/Activities';
+import Leaderboard from './components/Leaderboard';
+import Teams from './components/Teams';
+import Users from './components/Users';
+import Workouts from './components/Workouts';
 
-function App() {
+const navItems = [
+  { to: '/', label: 'Home' },
+  { to: '/users', label: 'Users' },
+  { to: '/teams', label: 'Teams' },
+  { to: '/activities', label: 'Activities' },
+  { to: '/leaderboard', label: 'Leaderboard' },
+  { to: '/workouts', label: 'Workouts' },
+];
+
+function HomePage() {
   return (
     <div className="container py-5">
       <div className="row justify-content-center">
@@ -16,15 +31,47 @@ function App() {
                 <li className="list-group-item">Express + TypeScript backend</li>
                 <li className="list-group-item">MongoDB with Mongoose data access</li>
               </ul>
-              <a className="btn btn-primary" href="/">
-                Explore the app
-              </a>
+              <p className="text-muted small">
+                Configure VITE_CODESPACE_NAME in .env.local to point the UI at the correct Codespaces backend URL.
+              </p>
             </div>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default App
+function App() {
+  return (
+    <div>
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div className="container">
+          <span className="navbar-brand fw-bold">OctoFit Tracker</span>
+          <ul className="navbar-nav ms-auto">
+            {navItems.map((item) => (
+              <li className="nav-item" key={item.to}>
+                <NavLink className={({ isActive }) => `nav-link${isActive ? ' active' : ''}`} to={item.to}>
+                  {item.label}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </nav>
+
+      <main className="container py-4">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/users" element={<Users />} />
+          <Route path="/teams" element={<Teams />} />
+          <Route path="/activities" element={<Activities />} />
+          <Route path="/leaderboard" element={<Leaderboard />} />
+          <Route path="/workouts" element={<Workouts />} />
+        </Routes>
+      </main>
+    </div>
+  );
+}
+
+export default App;
